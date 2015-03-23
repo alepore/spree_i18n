@@ -21,3 +21,8 @@ end
 RSpec.describe Spree::Property, type: :model do
   include_context 'behaves as translatable'
 end
+
+RSpec.describe Spree::PaymentMethod, type: :model do
+  include_context 'behaves as translatable'
+end
+

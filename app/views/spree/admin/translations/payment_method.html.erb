@@ -1,0 +1,24 @@
+<%= render 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:payment_methods) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:back_to_payment_methods_list), spree.admin_payment_methods_path, icon: 'arrow-left' %>
+  </li>
+<% end %>
+
+<div class="row">
+  <fieldset class="no-border-top translations">
+    <%= render 'settings' %>
+
+    <%= form_for [:admin, @resource], as: :payment_method, url: admin_payment_method_path(@resource) do |f| %>
+      <%= f.hidden_field :type, value: @resource.class.name %>
+      <%= render 'form_fields', f: f %>
+      <%= render 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
+  </fieldset>
+</div>
+

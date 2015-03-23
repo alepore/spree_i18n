@@ -169,6 +169,37 @@ RSpec.feature 'Translations', :js do
     end
   end
 
+  context "payment methods" do
+    given(:language) { Spree.t(:'i18n.this_file_language', locale: :it) }
+    given!(:payment_method) { create(:check_payment_method) }
+
+    background do
+      reset_spree_preferences
+      SpreeI18n::Config.available_locales = [:en, :it]
+      SpreeI18n::Config.supported_locales = [:en, :it]
+    end
+
+    scenario 'saves translated attributes properly' do
+      visit spree.admin_payment_methods_path
+      find('.fa-flag').click
+
+      within("#attr_fields .name.en.odd") { fill_in_name "Cash on Delivery" }
+      within("#attr_fields .name.it.odd") { fill_in_name "Contrassegno" }
+      click_on "Update"
+
+      change_locale
+      visit spree.admin_payment_methods_path
+      expect(page).to have_content('Contrassegno')
+    end
+
+    it "render edit route properly" do
+      visit spree.admin_payment_methods_path
+      find('.fa-flag').click
+      find('.fa-remove').click
+      expect(page).to have_css('.page-title')
+    end
+  end
+
   context "localization settings" do
     given(:language) { Spree.t(:'i18n.this_file_language', locale: 'de') }
     given(:french) { Spree.t(:'i18n.this_file_language', locale: 'fr') }
