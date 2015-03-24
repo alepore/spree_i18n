@@ -4,7 +4,7 @@
   <fieldset class="no-border-top translations">
     <%= render 'settings' %>
 
-    <%= form_for [:admin, @resource], url: edit_admin_general_settings_path do |f| %>
+    <%= form_for [:admin, @resource], url: admin_general_settings_path do |f| %>
       <%= render 'form_fields', f: f %>
       <div class="form-buttons filter-actions actions" data-hook="buttons">
         <%= button Spree.t('actions.update'), 'refresh' %>
